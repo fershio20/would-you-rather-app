@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.nav-button-pill {
+  cursor: pointer;
+}
+
+.avatar-nav {
+  width: 40px;
+  margin-top: -12px;
+  margin-left: 10px;
+  border-radius: 50px;
+}

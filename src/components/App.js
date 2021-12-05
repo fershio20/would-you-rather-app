@@ -1,17 +1,39 @@
-import logo from '../assets/logo.svg';
 import '../assets/App.css';
+import React, { Component } from "react";
+import {connect} from "react-redux";
+import { handleInitialData } from "../actions/shared";
 import Home from './Home'
+import PollPage from "./PollPage";
 import Navigation from "./Navigation";
-import PollList from "./PollList";
 
-function App() {
-  return (
-    <div className="App">
-        <Navigation />
-        <Home />
-        <PollList />
-    </div>
-  );
+class App extends Component {
+    componentDidMount() {
+        this.props.dispatch(handleInitialData())
+    }
+    render(){
+
+        return (
+
+            <div className="App">
+
+                {this.props.loading === true
+                    ? null
+                    : <div>
+
+                        <Navigation/>
+                        {/*<Home/>*/}
+                        <PollPage />
+                    </div>}
+
+            </div>
+        )
+    }
 }
 
-export default App;
+function mapStateToProps({authedUser}) {
+    return {
+        loading: authedUser === null
+    }
+}
+
+export default connect(mapStateToProps)(App)

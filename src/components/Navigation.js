@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {Col, Container, Nav, Row} from "react-bootstrap";
+import {connect} from "react-redux";
 
 class Navigation extends Component{
     handleOnClick = ()=>{
@@ -8,35 +10,53 @@ class Navigation extends Component{
         menu:{}
     }
     render(){
+        const {name, avatar} = this.props
         return(
-            <nav className='main-navigation'>
-                <ul>
-                    <li className='active'>
-                       <a href='#home'>
-                        Home
-                       </a>
-                    </li>
-                    <li>
-                        <a href="#new-question">
-                            New Question
-                        </a>
-                    </li>
-                    <li>
-                        <a href='#leaderboard'>
-                            Leaderboard
-                        </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>Hello, User</li>
-                    <li>Avatar</li>
-                    <li>
-                        <a href='#logout'>Log out</a>
-                    </li>
-                </ul>
-            </nav>
+            <Container>
+                <Row>
+                    <Col>
+                        <Nav variant="tabs" defaultActiveKey="/home" className="justify-content-center px-4 pt-4">
+                            <Nav.Item>
+                                <Nav.Link href="/home">Home</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="link-1">New Questions</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link >
+                                    LeaderBoards
+                                </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link>
+                                    Hello {name}
+                                    <img
+                                        className='avatar-nav'
+                                        src={avatar}
+                                        alt={name}
+                                        style={{
+                                            maxWidth: '35px',
+                                        }}/>
+                                </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link >
+                                    Log Out
+                                </Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
+function mapStateToProps({authedUser, users}){
+    const user = users[authedUser];
 
-export default Navigation;
+    return {
+        name: user.name,
+        avatar: user.avatarURL,
+    }
+}
+export default connect(mapStateToProps)(Navigation);
