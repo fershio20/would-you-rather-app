@@ -20,10 +20,11 @@ class Options extends Component{
     }
     render() {
         const { id, hasAnswered, optionOne, optionTwo, totalVotes, totalVotesOption1, totalVotesOption2 } = this.props
-
+        const percent1 = totalVotesOption1 !== 0 ? Math.round(totalVotesOption1*100/totalVotes) : (0)
+        const percent2 = totalVotesOption2 !== 0 ? Math.round(totalVotesOption2*100/totalVotes) : (0)
         return(
             <div>
-                <h3>Would you rather?</h3>
+                <h3 className='is-bold has-text-weight-bold'>Would you rather?</h3>
                 { !hasAnswered &&
                     <form onSubmit={ (e) => this.formSubmit(e, id)}>
                     <div className="radio">
@@ -59,17 +60,49 @@ class Options extends Component{
                 { hasAnswered &&
                     <div>
                         <h4>Results</h4>
+                        <hr/>
                         <div className='result-box-item'>
                             <h6>{optionOne.text}</h6>
-                            <div>
-                                {totalVotesOption1} / {totalVotes}
+                            <div className='is-flex is-justify-content-space-between mt-2'>
+                                <div>
+                                    {percent1} %
+                                </div>
+                                <div>
+                                    {totalVotesOption1} / {totalVotes}
+                                </div>
+                            </div>
+                            <div className='container'>
+                                <div className="columns">
+                                    <div className="column">
+                                        <progress className="progress is-primary"
+                                                  value={percent1}
+                                                  max="100">15%
+                                        </progress>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr/>
                         <div className='result-box-item'>
                             <h6>{optionTwo.text}</h6>
-                            <div>
-                                {totalVotesOption2} / {totalVotes}
+                            <div className='is-flex is-justify-content-space-between mt-2'>
+                                <div>
+                                    {percent2} %
+                                </div>
+                                <div>
+                                    {totalVotesOption2} / {totalVotes}
+                                </div>
+
+                            </div>
+                            <div className='container'>
+                                <div className="columns">
+                                    <div className="column">
+                                        <progress className="progress is-primary"
+                                                  value={percent2}
+                                                  max="100">15%
+                                        </progress>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

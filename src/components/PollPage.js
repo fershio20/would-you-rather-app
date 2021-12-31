@@ -9,7 +9,7 @@ import {Redirect} from "react-router-dom";
 class PollPage extends Component{
 
     render(){
-        const {id, authedUser} = this.props
+        const {question_id, authedUser} = this.props
         if (!authedUser) {
             return <Redirect to="/" />;
         }
@@ -23,7 +23,7 @@ class PollPage extends Component{
                     {/*<Poll pollId='vthrdm985a262al8qx3do' type='poll-page' />*/}
 
                     {/* Unaswered Poll */}
-                    <Poll pollId={id} type='poll-page' />
+                    <Poll pollId={question_id} type='poll-page' />
 
                 </div>
             </Fragment>
@@ -32,9 +32,9 @@ class PollPage extends Component{
     }
 }
 function mapStateToProps({authedUser}, props){
-    const { id } = props.match.params
+    const { question_id } = props.match.params
     return{
-        id,
+        question_id,
         authedUser
     }
 }

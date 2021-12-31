@@ -1,9 +1,11 @@
 # Would You Rather app
 > Fernando Vera
+
 This is the final proyect of the React nanodegree of Udacity
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-
+This project allowed me to learn all the basics of Reactjs and using Redux as a unique
+source of information.
 
 
 ## Getting Started
@@ -17,4 +19,10 @@ To get started follow these steps:
 
 ## Demo
 
-You can find a live demo here -> https://myreadsappfv.herokuapp.com/
+You can find a live demo here -> hhttps://would-you-rather-app-fvera.herokuapp.com/
+
+
+
+## Created By
+
+Fernando Vera. You can contact me at [here](fjvera.py@gmail.com).

@@ -12,7 +12,7 @@ class Home extends Component{
         // Redirect to login Page if not logged in
 
         if (!this.props.authedUser) {
-            return <Redirect to="/" />;
+            return <Redirect to="/login" />;
         }
         return(
             <div>

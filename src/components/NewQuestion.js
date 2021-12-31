@@ -33,12 +33,12 @@ class NewQuestion extends Component{
         const optionTwo = e.target[1].value
 
         dispatch(handleAddPoll({authedUser, optionOne, optionTwo}))
-        this.props.history.push("/home");
+        this.props.history.push("/");
     }
 
     render() {
         if (!this.props.authedUser) {
-            return <Redirect to="/" />;
+            return <Redirect to="/login" />;
         }
         return(
             <Fragment>

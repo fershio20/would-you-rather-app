@@ -14,7 +14,7 @@ class OptionsPreview extends Component{
                 </div>
                 <div className='d-grid gap-2"'>
 
-                    <Link   to={ `/poll/${pollID}` }>
+                    <Link   to={ `/questions/${pollID}` }>
                         <button className='button is-primary is-rounded'>
                             View Poll
                         </button>

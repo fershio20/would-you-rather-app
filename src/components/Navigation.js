@@ -26,11 +26,11 @@ class Navigation extends Component{
                             </div>
                             <div className='navbar-menu'>
                                 <div className="navbar-start">
-                                    <NavLink to='/home' exact activeClassName='active' className='navbar-item'>
+                                    <NavLink to='/' exact activeClassName='active' className='navbar-item'>
 
                                         Home
                                     </NavLink>
-                                    <NavLink to='/poll' exact activeClassName='active' className='navbar-item'>
+                                    <NavLink to='/add' exact activeClassName='active' className='navbar-item'>
 
                                         New Questions
                                     </NavLink>

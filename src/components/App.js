@@ -29,11 +29,11 @@ class App extends Component {
                             <Switch>
 
                                 {authedUser  && ( <Navigation />)}
-                                <Route path='/' exact component={Login} />
-                                <Route exact path='/home' component={Home} />
+                                <Route path='/login' exact component={Login} />
+                                <Route exact path='/' component={Home} />
                                 <Route exact path='/leaderboard' component={Leaderboard} />
-                                <Route exact path='/poll' component={NewQuestion} />
-                                <Route exact path='/poll/:id' component={PollPage} />
+                                <Route exact path='/add' component={NewQuestion} />
+                                <Route exact path='/questions/:question_id' component={PollPage} />
                                 <Route component={NotFound} />
                             </Switch>
                         </div>
