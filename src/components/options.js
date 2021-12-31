@@ -1,34 +1,38 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 import {connect} from "react-redux";
+import {handleAddAnswer} from "../actions/polls";
 
 class Options extends Component{
     state = {
-        selectedOption: '',
+        selectedOption: 'optionOne',
     }
     onValueChange = (e) => {
         this.setState({
             selectedOption: e.target.value
         });
+
     }
-    formSubmit = (e) => {
+    formSubmit = (e, id) => {
+        const { dispatch } = this.props;
         e.preventDefault();
+        dispatch(handleAddAnswer(id, this.state.selectedOption))
 
     }
     render() {
-        const { hasAnswered, optionOne, optionTwo, totalVotes, totalVotesOption1, totalVotesOption2 } = this.props
-        console.log(this.props)
+        const { id, hasAnswered, optionOne, optionTwo, totalVotes, totalVotesOption1, totalVotesOption2 } = this.props
+
         return(
             <div>
                 <h3>Would you rather?</h3>
                 { !hasAnswered &&
-                    <form onSubmit={this.formSubmit}>
+                    <form onSubmit={ (e) => this.formSubmit(e, id)}>
                     <div className="radio">
                         <label>
                             <input
                                 type="radio"
-                                value="Male"
-                                checked={this.state.selectedOption === "Male"}
+                                value='optionOne'
+                                name = "checkbox"
+                                checked={this.state.selectedOption === "optionOne"}
                                 onChange={this.onValueChange}
                             />
                             {optionOne.text}
@@ -38,18 +42,20 @@ class Options extends Component{
                         <label>
                             <input
                                 type="radio"
-                                value="Female"
-                                checked={this.state.selectedOption === "Female"}
+                                value='optionTwo'
+                                name = "checkbox"
+                                checked={this.state.selectedOption === "optionTwo"}
                                 onChange={this.onValueChange}
                             />
                             {optionTwo.text}
                         </label>
                     </div>
-                    <Button variant="outline-primary"  type="submit">
+                    <button className='button is-primary is-rounded'  type="submit">
                         Submit
-                    </Button>
+                    </button>
                 </form>
                 }
+                {/* Display Results if user has answered the poll */}
                 { hasAnswered &&
                     <div>
                         <h4>Results</h4>

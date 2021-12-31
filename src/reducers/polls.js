@@ -8,10 +8,22 @@ export default function polls (state = {}, action) {
                 ...action.polls
             }
         case ADD_POLL_ANSWER:
-            const { poll } = action
-            return{}
+            const { authedUser, pollID, answer } = action.pollInfo
+            return{
+                ...state,
+                [pollID]:{
+                    ...state[pollID],
+                    [answer]:{
+                        ...state[pollID][answer],
+                        votes: state[pollID][answer].votes.concat([authedUser])
+                    }
+                }
+            }
         case ADD_POLL:
-            return{}
+            return{
+                ...state,
+                [action.poll.id]: {...action.poll},
+            }
         default :
             return state
     }

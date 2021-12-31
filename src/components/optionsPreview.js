@@ -1,19 +1,24 @@
 import React, { Component } from "react";
-import {Button, Card} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 
 class OptionsPreview extends Component{
     render(){
-        const {text} = this.props
+        const {text, pollID } = this.props
 
         return(
             <div>
-                <Card.Title className='mt-4'>Would You Rather...</Card.Title>
-                <Card.Text>
+                <h1  className='mt-4 card-header-title'>Would You Rather...</h1>
+                <div className='card-content'>
                     {text}...
-                </Card.Text>
+                </div>
                 <div className='d-grid gap-2"'>
-                    <Button variant="outline-primary" className='px-4'>View Poll</Button>
+
+                    <Link   to={ `/poll/${pollID}` }>
+                        <button className='button is-primary is-rounded'>
+                            View Poll
+                        </button>
+                    </Link>
                 </div>
             </div>
         )

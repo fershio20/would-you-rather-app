@@ -49,3 +49,61 @@ nav.main-navigation li.active {
   background: red;
   color: #FFF;
 }
+
+
+span.totalPoints {
+  background: rgba(13, 110, 253, .25);
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.w-50{
+  width: 50%;
+}
+
+.w-100{
+  width: 100%;
+}
+
+.container.mt-5 {
+  width: 1100px;
+}
+
+.row {
+  display: flex;
+}
+
+.col-md-12 {
+  width: 99%;
+}
+.text-center{
+  text-align: center;
+}
+.navbar{
+  background: #FFF;
+}
+html {
+  background: #f5fffe !important;
+}
+div#root {
+  height: 100vh;
+}
+h4.navbar-item.is-bold {
+  font-weight: 700;
+}
+.tab-pane{
+  display: none;
+}
+.is-active .tab-pane{
+  display: block;
+}
+img.avatar-nav {
+  width: auto;
+  height: 35px;
+  margin-top: 4px;
+  margin-right: 15px;
+}

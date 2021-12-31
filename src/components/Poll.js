@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {Card, Row, Col} from "react-bootstrap";
 import { connect } from 'react-redux'
 import OptionsPreview from "./optionsPreview";
 import Options from "./options";
@@ -11,39 +10,44 @@ class Poll extends Component{
 
         return(
 
-            <Card className='w-50 mx-auto'>
-                <Card.Header><span className='fw-bold'>{name}</span> asks: {pollId}</Card.Header>
-                <Card.Body>
-                    <Row>
-                        <Col>
+            <div className='card w-50 mx-auto'>
+                <div className='card-header'>
+                    <h4 className='fw-bold card-header-title'>{name}</h4>
+                </div>
+                <div className='card-content'>
+                    <div className='columns'>
+                        <div className='column'>
                             <img alt='name of user' src={avatarURL} width={150}/>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className='column'>
                             {
                                 pollType === 'poll-list'
-                                    ? <OptionsPreview text={optionOne.text} />
+                                    ? <OptionsPreview pollID={pollId} text={optionOne.text} />
                                     : <Options id={pollId} hasAnswered={hasAnswered}/>
 
                             }
 
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 function mapStateToProps({authedUser, polls, users}, props){
     const { pollId, type } = props
-    const option1 = polls[pollId].optionOne.votes.includes(authedUser)
-    const option2 = polls[pollId].optionTwo.votes.includes(authedUser)
 
-    console.log('La encuesta en cuestion: ', (option1 || option2))
+    // Gets the poll to be displayed
+    const poll = polls[pollId]
+
+    // Verifies if the poll has been answered
+    const hasAnswered = poll.optionOne.votes.includes(authedUser) || poll.optionTwo.votes.includes(authedUser)
+
     return{
-        ...polls[pollId],
+        ...poll,
         ...users[polls[pollId].author],
         pollType: type,
-        hasAnswered: ((option1 || option2)),
+        hasAnswered: hasAnswered,
     }
 }
 export default connect(mapStateToProps)(Poll);

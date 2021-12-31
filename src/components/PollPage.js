@@ -1,19 +1,42 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import Poll from "./Poll";
-import Question from "./Question";
+import {connect} from "react-redux";
+import Navigation from "./Navigation";
+import {Redirect} from "react-router-dom";
+
 
 
 class PollPage extends Component{
 
     render(){
+        const {id, authedUser} = this.props
+        if (!authedUser) {
+            return <Redirect to="/" />;
+        }
+
+
         return(
-            <div className='poll-page mt-4'>
-                <Poll pollId='loxhs1bqm25b708cmbf3g' type='poll-page' />
-                {/*<Question pollId='6ni6ok3ym7mf1p33lnez' />*/}
-            </div>
+            <Fragment>
+                <Navigation />
+                <div className='poll-page mt-4'>
+                    {/* Answered Poll*/}
+                    {/*<Poll pollId='vthrdm985a262al8qx3do' type='poll-page' />*/}
+
+                    {/* Unaswered Poll */}
+                    <Poll pollId={id} type='poll-page' />
+
+                </div>
+            </Fragment>
+
         )
     }
 }
+function mapStateToProps({authedUser}, props){
+    const { id } = props.match.params
+    return{
+        id,
+        authedUser
+    }
+}
 
-
-export default PollPage;
+export default connect(mapStateToProps)(PollPage);

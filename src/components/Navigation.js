@@ -1,53 +1,73 @@
 import React, { Component } from "react";
-import {Col, Container, Nav, Row} from "react-bootstrap";
+
 import {connect} from "react-redux";
+import {setAuthedUser} from "../actions/authedUser";
+import {NavLink, withRouter} from "react-router-dom";
 
 class Navigation extends Component{
     handleOnClick = ()=>{
         // todo: Handle Active Tab on navigation bar
     }
+    onHandleLogOut = () => {
+        this.props.dispatch(setAuthedUser(null));
+        // When user is logged out, return to the signin page
+        this.props.history.push("/home");
+    };
     state = {
         menu:{}
     }
     render(){
         const {name, avatar} = this.props
         return(
-            <Container>
-                <Row>
-                    <Col>
-                        <Nav variant="tabs" defaultActiveKey="/home" className="justify-content-center px-4 pt-4">
-                            <Nav.Item>
-                                <Nav.Link href="/home">Home</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="link-1">New Questions</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link >
-                                    LeaderBoards
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link>
-                                    Hello {name}
-                                    <img
-                                        className='avatar-nav'
-                                        src={avatar}
-                                        alt={name}
-                                        style={{
-                                            maxWidth: '35px',
-                                        }}/>
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link >
-                                    Log Out
-                                </Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Col>
-                </Row>
-            </Container>
+
+                <nav  className="navbar">
+                            <div className='navbar-brand'>
+                               <h4 className='navbar-item is-bold'>Would your rather?</h4>
+                            </div>
+                            <div className='navbar-menu'>
+                                <div className="navbar-start">
+                                    <NavLink to='/home' exact activeClassName='active' className='navbar-item'>
+
+                                        Home
+                                    </NavLink>
+                                    <NavLink to='/poll' exact activeClassName='active' className='navbar-item'>
+
+                                        New Questions
+                                    </NavLink>
+                                    <NavLink to='/leaderboard' exact activeClassName='active' className='navbar-item'>
+
+                                        Leaderboard
+                                    </NavLink>
+                                </div>
+                                <div className="navbar-end">
+                                    <div className="navbar-item">
+                                        <div className="buttons">
+                                            <div className='is-flex'>
+                                                <div>
+                                                    Hello {name}
+
+                                                </div>
+                                                <div>
+                                                    <img
+                                                        className='avatar-nav'
+                                                        src={avatar}
+                                                        alt={name}
+                                                        />
+                                                </div>
+
+                                            </div>
+
+                                            <a className="button is-light" onClick={this.onHandleLogOut}>
+                                                Log Out
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </nav>
+
         )
     }
 }
@@ -59,4 +79,4 @@ function mapStateToProps({authedUser, users}){
         avatar: user.avatarURL,
     }
 }
-export default connect(mapStateToProps)(Navigation);
+export default withRouter(connect(mapStateToProps)(Navigation));

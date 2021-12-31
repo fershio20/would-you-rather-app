@@ -1,9 +1,10 @@
 import { saveQuestionAnswer, saveQuestion } from '../utils/api'
-import { showLoading, hideLoading } from 'react-redux-loading'
+import {addPollAnswerToUser, addPollToUser} from "./users";
+// import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_POLLS = 'RECEIVE_POLLS'
-export const ADD_POLL_ANSWER = 'RECEIVE_POLLS'
-export const ADD_POLL = 'RECEIVE_POLLS'
+export const ADD_POLL_ANSWER = 'ADD_POLL_ANSWER'
+export const ADD_POLL = 'ADD_POLL'
 
 export function receivePolls (polls) {
     return {
@@ -19,10 +20,65 @@ function addPoll (poll) {
         poll,
     }
 }
-function addPollAnswer (poll) {
+function addPollAnswer ({ authedUser, pollID, answer }) {
     return {
         type: ADD_POLL_ANSWER,
-        poll,
+        pollInfo:{ authedUser, pollID, answer },
     }
 }
 
+export function handleAddAnswer(pollID, answer) {
+
+    return (dispatch, getState) => {
+        const { authedUser } = getState();
+
+        // dispatch(showLoading());
+
+        return saveQuestionAnswer({
+            pollID,
+            answer,
+            authedUser
+        })
+            .then(() =>{
+                    dispatch(
+                        addPollAnswer({
+                            pollID,
+                            answer,
+                            authedUser
+                        })
+                    )
+                    dispatch(
+                        addPollAnswerToUser(
+                            authedUser,
+                            pollID,
+                            answer
+                        )
+                    )
+            }
+
+
+
+            )
+            // .then(() => dispatch(hideLoading()));
+    };
+}
+
+
+export function handleAddPoll (newPoll) {
+    return (dispatch) => {
+        const { authedUser, optionOne, optionTwo } = newPoll
+
+        //dispatch(showLoading())
+
+        return saveQuestion({
+            author: authedUser,
+            optionOneText: optionOne,
+            optionTwoText: optionTwo,
+        })
+            .then((poll) => {
+                dispatch(addPoll(poll))
+                dispatch(addPollToUser(authedUser, poll.id))
+            })
+            // .then(() => dispatch(hideLoading()))
+    }
+}
