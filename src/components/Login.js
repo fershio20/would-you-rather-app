@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import SelectComponent from "./commons/SelectComponent";
 import {setAuthedUser} from "../actions/authedUser";
 import logo from "../assets/logo.svg";
-import {Redirect} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 
 
@@ -11,10 +11,11 @@ import {Redirect} from "react-router-dom";
 class Login extends Component{
     state = {
         selectedUser: '',
-        toHome: false
+        doRedirect: false,
+        prevPath:'',
     }
-    onHandleSelect = value =>{
 
+    onHandleSelect = value =>{
         this.setState(()=>(
             {
                 selectedUser: value
@@ -22,23 +23,28 @@ class Login extends Component{
         ))
     }
 
+
     onHandleSubmit = (e)=>{
         e.preventDefault()
         const {dispatch} = this.props
-        dispatch(setAuthedUser(this.state.selectedUser))
+
         this.setState((prevState) => ({
             ...prevState,
-            toHome:  true,
+            doRedirect:  true,
         }))
+
+        dispatch(setAuthedUser(this.state.selectedUser))
+
     }
     render() {
 
         const {users} = this.props
 
-        const { toHome } = this.state
-        if (toHome === true) {
-            return <Redirect to='/' />
+        if (this.state.doRedirect === true) {
+            const goBackTo = (this.props.location.state !== undefined) ? this.props.location.state.prevPath : '/'
+            return <Redirect to={goBackTo} />
         }
+
 
         return(
             <div className='container mt-5'>
@@ -67,7 +73,7 @@ class Login extends Component{
 
                                         <div className='card-footer mt-5 pt-4'>
                                             <button  type="submit" className='card-footer-item button is-primary'
-                                                     disabled={this.state.selectedUser? false : true }
+                                                     disabled={!this.state.selectedUser }
                                             >
                                                 Log in
                                             </button>
@@ -89,4 +95,4 @@ function mapStateToProps({users}){
         users,
     }
 }
-export default connect(mapStateToProps)(Login)
+export default withRouter(connect(mapStateToProps)(Login))

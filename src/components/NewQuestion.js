@@ -1,8 +1,9 @@
 import React, {Component, Fragment} from "react";
 import {connect} from "react-redux";
 import {handleAddPoll} from "../actions/polls";
-import {Redirect, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import Navigation from "./Navigation";
+import HistoryHandler from "../utils/HistoryHandler";
 
 
 class NewQuestion extends Component{
@@ -38,7 +39,7 @@ class NewQuestion extends Component{
 
     render() {
         if (!this.props.authedUser) {
-            return <Redirect to="/login" />;
+            return HistoryHandler(this.props.history.location.pathname);
         }
         return(
             <Fragment>

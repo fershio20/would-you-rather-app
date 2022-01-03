@@ -11,7 +11,7 @@ class Navigation extends Component{
     onHandleLogOut = () => {
         this.props.dispatch(setAuthedUser(null));
         // When user is logged out, return to the signin page
-        this.props.history.push("/home");
+        this.props.history.push("/login");
     };
     state = {
         menu:{}

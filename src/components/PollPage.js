@@ -2,7 +2,9 @@ import React, {Component, Fragment} from "react";
 import Poll from "./Poll";
 import {connect} from "react-redux";
 import Navigation from "./Navigation";
-import {Redirect} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
+import HistoryHandler from "../utils/HistoryHandler";
+import NotFound from "./commons/NotFound";
 
 
 
@@ -10,33 +12,27 @@ class PollPage extends Component{
 
     render(){
         const {question_id, authedUser} = this.props
-        if (!authedUser) {
-            return <Redirect to="/" />;
+        if (!authedUser ) {
+            return HistoryHandler(this.props.history.location.pathname);
         }
-
-
         return(
             <Fragment>
                 <Navigation />
                 <div className='poll-page mt-4'>
-                    {/* Answered Poll*/}
-                    {/*<Poll pollId='vthrdm985a262al8qx3do' type='poll-page' />*/}
-
-                    {/* Unaswered Poll */}
-                    <Poll pollId={question_id} type='poll-page' />
-
+                    {question_id ? <Poll pollId={question_id} type='poll-page' /> : <NotFound />}
                 </div>
             </Fragment>
 
         )
     }
 }
-function mapStateToProps({authedUser}, props){
+function mapStateToProps({authedUser, polls}, props){
+
     const { question_id } = props.match.params
     return{
-        question_id,
+        question_id: polls.hasOwnProperty(question_id) ? question_id : false,
         authedUser
     }
 }
 
-export default connect(mapStateToProps)(PollPage);
+export default withRouter(connect(mapStateToProps)(PollPage));

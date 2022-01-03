@@ -18,7 +18,6 @@ class App extends Component {
         this.props.dispatch(handleInitialData())
     }
     render(){
-        const { authedUser } = this.props
 
         return (
 
@@ -26,9 +25,8 @@ class App extends Component {
                     <Fragment>
                         <LoadingBar />
                         <div className=''>
-                            <Switch>
 
-                                {authedUser  && ( <Navigation />)}
+                            <Switch>
                                 <Route path='/login' exact component={Login} />
                                 <Route exact path='/' component={Home} />
                                 <Route exact path='/leaderboard' component={Leaderboard} />
